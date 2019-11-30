@@ -17,16 +17,16 @@ class MyApplication(pygubu.TkApplication):
         builder.connect_callbacks(self)
 
     def on_b1h_click(self):
-        subprocess.Popen(['shutdown.exe', '-s', '-t', '3600'], shell=True)
+        subprocess.Popen(['shutdown.exe', '-s', '-t', '3600'])
 
     def on_b2h_click(self):
-        subprocess.Popen(['shutdown.exe', '-s', '-t', '7200'], shell=True)
+        subprocess.Popen(['shutdown.exe', '-s', '-t', '7200'])
 
     def on_b3h_click(self):
-        subprocess.Popen(['shutdown.exe', '-s', '-t', '10800'], shell=True)
+        subprocess.Popen(['shutdown.exe', '-s', '-t', '10800'])
 
     def abort_shutdown(self):
-        subprocess.Popen(['shutdown.exe', '-a'], shell=True)
+        subprocess.Popen(['shutdown.exe', '-a'])
 
 
 if __name__ == '__main__':
