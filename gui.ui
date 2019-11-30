@@ -59,9 +59,9 @@
       </object>
     </child>
     <child>
-      <object id="stop" class="ttk.Button">
-        <property name="command">stop_shutdown</property>
-        <property name="text" translatable="yes">Stop shutdown</property>
+      <object id="abort" class="ttk.Button">
+        <property name="command">abort_shutdown</property>
+        <property name="text" translatable="yes">Abort shutdown</property>
         <layout>
           <property name="column">0</property>
           <property name="propagate">True</property>

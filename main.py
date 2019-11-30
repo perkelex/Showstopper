@@ -20,12 +20,12 @@ class MyApplication(pygubu.TkApplication):
         subprocess.Popen(['shutdown.exe', '-s', '-t', '3600'], shell=True)
 
     def on_b2h_click(self):
-        messagebox.showinfo('Message', 'You clicked Button 2')
+        subprocess.Popen(['shutdown.exe', '-s', '-t', '7200'], shell=True)
 
     def on_b3h_click(self):
-        messagebox.showinfo('Message', 'You clicked Button 3')
+        subprocess.Popen(['shutdown.exe', '-s', '-t', '10800'], shell=True)
 
-    def stop_shutdown(self):
+    def abort_shutdown(self):
         subprocess.Popen(['shutdown.exe', '-a'], shell=True)
 
 
