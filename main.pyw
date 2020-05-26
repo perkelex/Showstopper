@@ -2,10 +2,13 @@ import tkinter as tk
 from tkinter import messagebox
 import pygubu
 import subprocess
+import time
+import threading
+import sys
 
 class MyApplication(pygubu.TkApplication):
     def _create_ui(self):
-
+        self.stop = False
         #1: Create a builder
         self.builder = builder = pygubu.Builder()
 
@@ -17,19 +20,42 @@ class MyApplication(pygubu.TkApplication):
         builder.connect_callbacks(self)
 
     def shutdown_now(self):
-        subprocess.Popen(['shutdown.exe', '-s', '-f', '-t', '0'])
+        self.spawnThreadWithDelay(0)
 
     def on_b1h_click(self):
-        subprocess.Popen(['shutdown.exe', '-s', '-f', '-t', '3600'])
+        self.spawnThreadWithDelay(3600)
 
     def on_b2h_click(self):
-        subprocess.Popen(['shutdown.exe', '-s', '-f', '-t', '7200'])
+        self.spawnThreadWithDelay(7200)
 
     def on_b3h_click(self):
-        subprocess.Popen(['shutdown.exe', '-s', '-f', '-t', '10800'])
+        self.spawnThreadWithDelay(10800)
 
     def abort_shutdown(self):
-        subprocess.Popen(['shutdown.exe', '-a'])
+        self.stop = True
+        if hasattr(self, 'thread'):
+            if(self.thread.is_alive()):
+                self.thread.join()
+                del self.thread
+        print('\nShutdown aborted')
+
+    def shutdown(self, delay):
+        self.stop = False
+        self.countdown_label = self.builder.get_object('countdown_label', self.mainwindow)
+        while delay > 0:
+            if(self.stop):
+                return
+            time.sleep(1)
+            delay -= 1
+            printMessage = 'Shutting down in ' + str(delay) + ' seconds'
+            print(printMessage, end='\r', flush=True)
+            self.countdown_label.text = "Shutdown in: " + str(delay)
+        subprocess.Popen(['shutdown.exe', '-s', '-f', '-t', '0'])
+
+    def spawnThreadWithDelay(self, delay):
+        self.thread = threading.Thread(target=self.shutdown, args=(delay,))
+        self.thread.start()
+
 
 
 if __name__ == '__main__':

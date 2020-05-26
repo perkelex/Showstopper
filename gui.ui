@@ -11,6 +11,28 @@
       <property name="row">0</property>
     </layout>
     <child>
+      <object id="Instruciton_label" class="ttk.Label">
+        <property name="justify">left</property>
+        <property name="text" translatable="yes">Choose shutdown delay</property>
+        <layout>
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object id="now" class="ttk.Button">
+        <property name="command">shutdown_now</property>
+        <property name="text" translatable="yes">Now</property>
+        <layout>
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">1</property>
+        </layout>
+      </object>
+    </child>
+    <child>
       <object id="b1h" class="ttk.Button">
         <property name="command">on_b1h_click</property>
         <property name="state">normal</property>
@@ -47,18 +69,6 @@
       </object>
     </child>
     <child>
-      <object id="Label" class="ttk.Label">
-        <property name="justify">left</property>
-        <property name="text" translatable="yes">Shutdown in
-</property>
-        <layout>
-          <property name="column">0</property>
-          <property name="propagate">True</property>
-          <property name="row">0</property>
-        </layout>
-      </object>
-    </child>
-    <child>
       <object id="abort" class="ttk.Button">
         <property name="command">abort_shutdown</property>
         <property name="text" translatable="yes">Abort shutdown</property>
@@ -70,14 +80,11 @@
       </object>
     </child>
     <child>
-      <object id="now" class="ttk.Button">
-        <property name="command">shutdown_now</property>
-        <property name="text" translatable="yes">Now
-</property>
+      <object id="countdown_label" class="ttk.Label">
         <layout>
           <property name="column">0</property>
           <property name="propagate">True</property>
-          <property name="row">1</property>
+          <property name="row">6</property>
         </layout>
       </object>
     </child>
