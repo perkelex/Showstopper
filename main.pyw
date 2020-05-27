@@ -6,6 +6,8 @@ import time
 import threading
 import sys
 
+#maybe try to repack the label to refresh
+
 class MyApplication(pygubu.TkApplication):
     def _create_ui(self):
         self.stop = False
