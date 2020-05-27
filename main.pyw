@@ -77,7 +77,7 @@ class Showstopper:
         # subprocess.Popen(['shutdown.exe', '-s', '-f', '-t', '0'])
 
     def spawnThreadWithDelay(self, delay):
-        if(self.thrpppppead is None):
+        if(self.thread is None):
             self.thread = threading.Thread(target=self.shutdown, args=(delay,))
             self.thread.start()
         #else print error in label
