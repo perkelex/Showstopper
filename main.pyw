@@ -44,8 +44,8 @@ class Showstopper:
 
     def on_b1h_click(self):
         print('countdown started')
-        loop = self.window.after(100, self.on_b1h_click, True)
-        self.window.after_cancel(loop)
+        # loop = self.window.after(100, self.on_b1h_click, True)
+        # self.window.after_cancel(loop)
         # self.spawnThreadWithDelay(3600)
 
     def on_b2h_click(self):
@@ -67,7 +67,6 @@ class Showstopper:
 
     def shutdown(self, delay):
         print("thread started")
-        
         # while delay > 0:
         #     while(not self.abort_shutdown):
         #         time.sleep(1)
