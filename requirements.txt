@@ -1,0 +1,2 @@
+pygubu==0.10.3
+pygubu-designer==0.11
