@@ -67,33 +67,55 @@ import tkinter as tk
 #         self.thread = threading.Thread(target=self.shutdown, args=(delay,))
 #         self.thread.start()
 
+global stop
+global testLabel
+global tkStringVar
+
 def shutdown(delay):
     while delay > 0:
         print(f"delay is {delay}")
         if stop:
-            print("thread stopped")
+            print("start thread stopped")
             return
         time.sleep(1)
         delay-=1
     print("time ran out")
 
+# def stop():
+#     stop = True
+#     print("stop thread stopped")
+
+def changeLabel(text):
+    tkStringVar.set(text)
 
 if __name__ == '__main__':
-    global stop
-    stop = False
-    t = threading.Thread(target=shutdown, args=(10,))
-    stop = True
-    # mainWindow = tk.Tk()
-    # mainWindow.title('Counting Seconds')
+    # stop = False
+    # start_t = threading.Thread(target=shutdown, args=(10,))
+    # stop_t = threading.Thread(target=stop)
+    # start_t.start()
+    # stop_t.start()
+    # time.sleep(5)
+    # stop = True
+    mainWindow = tk.Tk()
+    mainWindow.title('Counting Seconds')
 
-    # startButton = tk.Button(mainWindow, text='Start', width=25, command=mainWindow.destroy)
-    # startButton.pack()
+    startButton = tk.Button(mainWindow, text='Start', width=25, command=mainWindow.destroy)
+    startButton.pack()
 
-    # stopButton = tk.Button(mainWindow, text='Stop', width=25, command=mainWindow.destroy)
-    # stopButton.pack()
+    stopButton = tk.Button(mainWindow, text='Stop', width=25, command=mainWindow.destroy)
+    stopButton.pack()
 
-    # mainWindow.mainloop()
+    tkStringVar = tk.StringVar()
+    tkStringVar.set("start up the rotos")
 
+    testLabel = tk.Label(mainWindow, textvariable = tkStringVar).pack()
+    # testLabel.pack()
+
+    mainWindow.mainloop()
+
+    changeText = threading.Thread(target=changeLabel, args=("pack the commie scum",))
+    time.sleep(5)
+    changeText.start()
 
 
 
