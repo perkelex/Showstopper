@@ -5,7 +5,6 @@ from PySide6 import QtCore, QtWidgets
 
 
 class Showstopper(QtWidgets.QWidget):
-
     class Decoratos(object):
         @staticmethod
         def stopTimers(func):
@@ -59,7 +58,6 @@ class Showstopper(QtWidgets.QWidget):
 
     @Decoratos.stopTimers
     def nowButtonOnClick(self):
-
         self.counter = 0
 
         self.triggerTimer.setInterval(self.counter * 1000)
@@ -69,7 +67,6 @@ class Showstopper(QtWidgets.QWidget):
 
     @Decoratos.stopTimers
     def oneHourButtonOnClick(self):
-
         self.counter = 3600
 
         self.triggerTimer.setInterval(self.counter * 1000)
@@ -79,7 +76,6 @@ class Showstopper(QtWidgets.QWidget):
 
     @Decoratos.stopTimers
     def twoHourButtonOnClick(self):
-
         self.counter = 7200
 
         self.triggerTimer.setInterval(self.counter * 1000)
@@ -89,7 +85,6 @@ class Showstopper(QtWidgets.QWidget):
 
     @Decoratos.stopTimers
     def threeHourButtonOnClick(self):
-
         self.counter = 10800
 
         self.triggerTimer.setInterval(self.counter * 1000)
