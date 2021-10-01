@@ -3,7 +3,21 @@ import time
 import subprocess
 from PySide6 import QtCore, QtWidgets
 
-class MyWidget(QtWidgets.QWidget):
+
+class Showstopper(QtWidgets.QWidget):
+
+    class Decoratos(object):
+        @staticmethod
+        def stopTimers(func):
+            def inner(self, *args, **kwargs):
+                if self.countdownTimer.isActive():
+                    self.countdownTimer.stop()
+                if self.triggerTimer.isActive():
+                    self.triggerTimer.stop()
+
+                func(self, *args, **kwargs)
+            return inner
+
     def __init__(self):
         super().__init__()
 
@@ -17,7 +31,7 @@ class MyWidget(QtWidgets.QWidget):
         self.oneHourButton = QtWidgets.QPushButton("1h")
         self.twoHourButton = QtWidgets.QPushButton("2h")
         self.threeHourButton = QtWidgets.QPushButton("3h")
-        self.abortButton = QtWidgets.QPushButton("Abort shutdown")
+        self.abortButton = QtWidgets.QPushButton("Abort")
 
         self.countdownTimer = QtCore.QTimer()
         self.countdownTimer.setInterval(1000)
@@ -42,12 +56,9 @@ class MyWidget(QtWidgets.QWidget):
         self.threeHourButton.clicked.connect(self.threeHourButtonOnClick)
         self.abortButton.clicked.connect(self.abortButtonOnClick)
 
-    @QtCore.Slot()
+
+    @Decoratos.stopTimers
     def nowButtonOnClick(self):
-        if self.countdownTimer.isActive():
-            self.countdownTimer.stop()
-        if self.triggerTimer.isActive():
-            self.triggerTimer.stop()
 
         self.counter = 0
 
@@ -56,12 +67,8 @@ class MyWidget(QtWidgets.QWidget):
 
         self.countdownTimer.start()
 
-    @QtCore.Slot()
+    @Decoratos.stopTimers
     def oneHourButtonOnClick(self):
-        if self.countdownTimer.isActive():
-            self.countdownTimer.stop()
-        if self.triggerTimer.isActive():
-            self.triggerTimer.stop()
 
         self.counter = 3600
 
@@ -70,13 +77,8 @@ class MyWidget(QtWidgets.QWidget):
 
         self.countdownTimer.start()
 
-
-    @QtCore.Slot()
+    @Decoratos.stopTimers
     def twoHourButtonOnClick(self):
-        if self.countdownTimer.isActive():
-            self.countdownTimer.stop()
-        if self.triggerTimer.isActive():
-            self.triggerTimer.stop()
 
         self.counter = 7200
 
@@ -85,12 +87,8 @@ class MyWidget(QtWidgets.QWidget):
 
         self.countdownTimer.start()
 
-    @QtCore.Slot()
+    @Decoratos.stopTimers
     def threeHourButtonOnClick(self):
-        if self.countdownTimer.isActive():
-            self.countdownTimer.stop()
-        if self.triggerTimer.isActive():
-            self.triggerTimer.stop()
 
         self.counter = 10800
 
@@ -99,13 +97,8 @@ class MyWidget(QtWidgets.QWidget):
 
         self.countdownTimer.start()
 
-
+    @Decoratos.stopTimers
     def abortButtonOnClick(self):
-        if self.countdownTimer.isActive():
-            self.countdownTimer.stop()
-        if self.triggerTimer.isActive():
-            self.triggerTimer.stop()
-
         self.bottomLabel.setText("Shutdown aborted!")
 
     def countdown(self):
@@ -113,13 +106,13 @@ class MyWidget(QtWidgets.QWidget):
         self.bottomLabel.setText(f"Countdown: {time.strftime('%#H:%M:%S', time.gmtime(self.counter))}")
 
     def shutdown(self):
-        # print("Shutdown is happening")
         subprocess.Popen(['shutdown.exe', '-s', '-f', '-t', '0'])
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
 
-    widget = MyWidget()
+    widget = Showstopper()
     widget.setWindowTitle("Showstopper")
     # window icon doesn't work for some odd reason
     # widget.setWindowIcon(QtGui.QIcon("rss/shutodwn.png"))
