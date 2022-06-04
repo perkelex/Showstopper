@@ -2,6 +2,7 @@ from sys import exit
 from time import strftime, gmtime
 from subprocess import Popen
 from PySide6 import QtCore, QtWidgets
+from PySide6.QtGui import QIntValidator
 
 
 class Showstopper(QtWidgets.QWidget):
@@ -40,19 +41,51 @@ class Showstopper(QtWidgets.QWidget):
         self.triggerTimer.timeout.connect(self.shutdown)
         self.triggerTimer.setSingleShot(True)
 
-        self.layout = QtWidgets.QVBoxLayout(self)
-        self.layout.addWidget(self.topLabel)
-        self.layout.addWidget(self.nowButton)
-        self.layout.addWidget(self.oneHourButton)
-        self.layout.addWidget(self.twoHourButton)
-        self.layout.addWidget(self.threeHourButton)
-        self.layout.addWidget(self.abortButton)
-        self.layout.addWidget(self.bottomLabel)
+        self.layout = QtWidgets.QGridLayout(self)
+        self.customTimeLayout = QtWidgets.QHBoxLayout()
+        self.CTLHourInput = QtWidgets.QLineEdit("00")
+        self.CTLHourInput.setFixedWidth(20)
+        self.CTLHourInput.setFixedHeight(15)
+
+        self.CTLHMSeparatorLabel = QtWidgets.QLabel(":",
+                                     alignment=QtCore.Qt.AlignCenter)
+
+        self.CTLMinuteInput = QtWidgets.QLineEdit("00")
+        self.CTLMinuteInput.setFixedWidth(20)
+        self.CTLMinuteInput.setFixedHeight(15)
+
+        self.CTLMSSeparatorLabel = QtWidgets.QLabel(":",
+                                     alignment=QtCore.Qt.AlignCenter)
+
+        self.CTLSecondInput = QtWidgets.QLineEdit("00")
+        self.CTLSecondInput.setFixedWidth(20)
+        self.CTLSecondInput.setFixedHeight(15)
+
+        self.CTLStartButton = QtWidgets.QPushButton("Start")
+
+        self.customTimeLayout.addWidget(self.CTLHourInput)
+        self.customTimeLayout.addWidget(self.CTLHMSeparatorLabel)
+        self.customTimeLayout.addWidget(self.CTLMinuteInput)
+        self.customTimeLayout.addWidget(self.CTLMSSeparatorLabel)
+        self.customTimeLayout.addWidget(self.CTLSecondInput)
+        self.customTimeLayout.addWidget(self.CTLStartButton)
+
+        self.layout.addWidget(self.topLabel, 0, 1)
+        self.layout.addWidget(self.nowButton, 1, 1)
+        self.layout.addWidget(self.oneHourButton, 2, 1)
+        self.layout.addWidget(self.twoHourButton, 3, 1)
+        self.layout.addWidget(self.threeHourButton, 4, 1)
+        self.layout.addLayout(self.customTimeLayout, 5, 1)
+        self.layout.addWidget(self.abortButton, 6, 1)
+        self.layout.addWidget(self.bottomLabel, 7, 1)
+
+        self.setLayout(self.layout)
 
         self.nowButton.clicked.connect(self.nowButtonOnClick)
         self.oneHourButton.clicked.connect(self.oneHourButtonOnClick)
         self.twoHourButton.clicked.connect(self.twoHourButtonOnClick)
         self.threeHourButton.clicked.connect(self.threeHourButtonOnClick)
+        self.CTLStartButton.clicked.connect(self.CTLStartButtonOnClick)
         self.abortButton.clicked.connect(self.abortButtonOnClick)
 
 
@@ -93,6 +126,15 @@ class Showstopper(QtWidgets.QWidget):
         self.countdownTimer.start()
 
     @Decoratos.stopTimers
+    def CTLStartButtonOnClick(self):
+        self.counter = self.getHours() + self.getMinutes() + self.getSeconds()
+
+        self.triggerTimer.setInterval(self.counter * 1000)
+        self.triggerTimer.start()
+
+        self.countdownTimer.start()
+
+    @Decoratos.stopTimers
     def abortButtonOnClick(self):
         self.bottomLabel.setText("Shutdown aborted!")
 
@@ -102,6 +144,30 @@ class Showstopper(QtWidgets.QWidget):
 
     def shutdown(self):
         Popen(['shutdown.exe', '-s', '-f', '-t', '0'])
+
+    def getHours(self):
+        hours = 0
+        try:
+            hours = int(self.CTLHourInput.text()) * 3600
+        except:
+            return 0
+        return hours
+
+    def getMinutes(self):
+        minutes = 0
+        try:
+            minutes = int(self.CTLMinuteInput.text()) * 60
+        except:
+            return 0
+        return minutes
+
+    def getSeconds(self):
+        seconds = 0
+        try:
+            seconds = int(self.CTLSecondInput.text())
+        except:
+            return 0
+        return seconds
 
 
 if __name__ == "__main__":
