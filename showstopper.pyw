@@ -43,21 +43,21 @@ class Showstopper(QtWidgets.QWidget):
 
         self.layout = QtWidgets.QGridLayout(self)
         self.customTimeLayout = QtWidgets.QHBoxLayout()
-        self.CTLHourInput = QtWidgets.QLineEdit("00")
+        self.CTLHourInput = QtWidgets.QLineEdit()
         self.CTLHourInput.setFixedWidth(20)
         self.CTLHourInput.setFixedHeight(15)
 
         self.CTLHMSeparatorLabel = QtWidgets.QLabel(":",
                                      alignment=QtCore.Qt.AlignCenter)
 
-        self.CTLMinuteInput = QtWidgets.QLineEdit("00")
+        self.CTLMinuteInput = QtWidgets.QLineEdit()
         self.CTLMinuteInput.setFixedWidth(20)
         self.CTLMinuteInput.setFixedHeight(15)
 
         self.CTLMSSeparatorLabel = QtWidgets.QLabel(":",
                                      alignment=QtCore.Qt.AlignCenter)
 
-        self.CTLSecondInput = QtWidgets.QLineEdit("00")
+        self.CTLSecondInput = QtWidgets.QLineEdit()
         self.CTLSecondInput.setFixedWidth(20)
         self.CTLSecondInput.setFixedHeight(15)
 
