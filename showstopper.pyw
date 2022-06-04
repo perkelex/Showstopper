@@ -1,6 +1,6 @@
-import sys
-import time
-import subprocess
+from sys import exit
+from time import strftime, gmtime
+from subprocess import Popen
 from PySide6 import QtCore, QtWidgets
 
 
@@ -98,10 +98,10 @@ class Showstopper(QtWidgets.QWidget):
 
     def countdown(self):
         self.counter -= 1
-        self.bottomLabel.setText(f"Countdown: {time.strftime('%#H:%M:%S', time.gmtime(self.counter))}")
+        self.bottomLabel.setText(f"Countdown: {strftime('%#H:%M:%S', gmtime(self.counter))}")
 
     def shutdown(self):
-        subprocess.Popen(['shutdown.exe', '-s', '-f', '-t', '0'])
+        Popen(['shutdown.exe', '-s', '-f', '-t', '0'])
 
 
 if __name__ == "__main__":
@@ -114,4 +114,4 @@ if __name__ == "__main__":
     widget.resize(250, 100)
     widget.show()
 
-    sys.exit(app.exec())
+    exit(app.exec())
