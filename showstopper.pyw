@@ -140,10 +140,11 @@ class Showstopper(QtWidgets.QWidget):
 
     def countdown(self):
         self.counter -= 1
-        self.bottomLabel.setText(f"Countdown: {strftime('%#H:%M:%S', gmtime(self.counter))}")
+        self.bottomLabel.setText(f"Countdown: {strftime('%-H:%M:%S', gmtime(self.counter))}")
 
     def shutdown(self):
-        Popen(['shutdown.exe', '-s', '-f', '-t', '0'])
+        # Popen(['sudo shutdown', '-h', '10'])
+        Popen(['osascript', '-e', 'tell app "System Events" to shut down'])
 
     def getHours(self):
         hours = 0
